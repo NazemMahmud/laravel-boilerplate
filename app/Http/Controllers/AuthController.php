@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegistrationRequest;
 use App\Models\User;
+use App\Repositories\UserRepositoryInterface;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\JsonResponse;
 
@@ -15,9 +16,10 @@ class AuthController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UserRepositoryInterface $repo)
     {
         $this->middleware('auth:api', ['except' => ['login', 'registration']]);
+        $this->repository = $repo;
     }
 
     /**
@@ -29,15 +31,10 @@ class AuthController extends Controller
     {
         $requestData = $request->validated();
 
-        $user = User::create([
-            'name' => $requestData->name,
-            'email' => $requestData->email,
-            'password' => Hash::make($requestData->password)
-        ]);
+        $user = $this->repository->createResource($requestData);
 
         return response()->json([
             'message' => 'User successfully registered',
-            'user' => $user
         ], 201);
     }
 
