@@ -52,7 +52,9 @@ class AuthController extends Controller
     /**
      * login user
      *
+     * @param Request $request
      * @return JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function login(Request $request): JsonResponse
     {
@@ -69,8 +71,19 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        return $this->respondWithToken($token);
+        return response()->json(['data' => $this->respondWithToken($token)], 200);
     }
+
+    /**
+     * Refresh token.
+     *
+     * @return JsonResponse
+     */
+    public function refresh(): JsonResponse
+    {
+        return response()->json(['data' => $this->respondWithToken(auth()->refresh())], 200);
+    }
+
 
     /**
      * Logout user
@@ -84,15 +97,6 @@ class AuthController extends Controller
         return response()->json(['message' => 'User successfully logged out.']);
     }
 
-    /**
-     * Get user profile.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function profile()
-    {
-        return response()->json(auth()->user());
-    }
 
     /**
      * Get the token array structure.
