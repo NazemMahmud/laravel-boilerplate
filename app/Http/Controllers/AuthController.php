@@ -16,10 +16,8 @@ class AuthController extends Controller
      *
      * @return void
      */
-    public function __construct(UserRepositoryInterface $repo)
+    public function __construct(private UserRepositoryInterface $repository)
     {
-        $this->middleware('auth:api', ['except' => ['login', 'registration']]);
-        $this->repository = $repo;
     }
 
     /**
@@ -91,7 +89,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => auth()->factory()->getTTL() * 1
         ]);
     }
 
