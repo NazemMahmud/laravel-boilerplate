@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
+use App\Http\Resources\UserResource;
 
 class UserController extends Controller
 {
     /**
      * Get user profile.
      *
-     * @return JsonResponse
+     * @return UserResource
      */
-    public function profile(): JsonResponse
+    public function profile(): UserResource
     {
-        return response()->json(auth()->user());
+        return new UserResource(auth()->user());
     }
 }

@@ -43,16 +43,18 @@ class RegistrationRequest extends FormRequest
     /**
      * Configure the validator instance.
      *
-     * @param  Validator $validator
+     * @param Validator $validator
      * @throws HttpResponseException
      */
     public function withValidator(Validator $validator)
     {
-        if($validator->fails()) {
+        if ($validator->fails()) {
             $errors = $validator->errors();
             throw new HttpResponseException(
                 response()->json([
-                    'message' => $errors->first()
+                    'data' => [
+                        'message' => $errors->first()
+                    ]
                 ], 422)
             );
         }

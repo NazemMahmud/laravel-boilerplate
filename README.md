@@ -28,9 +28,9 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ##TODOS
 
-- Custom request, validation 
 - Error handle
 - Auth failure error handle
 - repository pattern
 - sendPasswordResetLink
 - reset Password
+- resource API return

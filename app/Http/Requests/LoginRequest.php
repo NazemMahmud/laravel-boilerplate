@@ -50,7 +50,9 @@ class LoginRequest extends FormRequest
             $errors = $validator->errors();
             throw new HttpResponseException(
                 response()->json([
-                    'message' => $errors->first()
+                    'data' => [
+                        'message' => $errors->first()
+                    ]
                 ], 422)
             );
         }

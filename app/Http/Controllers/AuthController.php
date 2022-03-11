@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegistrationRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\JsonResponse;
 
@@ -45,7 +44,7 @@ class AuthController extends Controller
     /**
      * login user
      *
-     * @param Request $request
+     * @param LoginRequest $request
      * @return JsonResponse
      */
     public function login(LoginRequest $request): JsonResponse
@@ -56,7 +55,7 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        return response()->json(['data' => $this->respondWithToken($token)], 200);
+        return response()->json(['data' => $this->respondWithToken($token)->original], 200);
     }
 
     /**
@@ -66,7 +65,7 @@ class AuthController extends Controller
      */
     public function refresh(): JsonResponse
     {
-        return response()->json(['data' => $this->respondWithToken(auth()->refresh())], 200);
+        return response()->json(['data' => $this->respondWithToken(auth()->refresh())->original], 200);
     }
 
 
