@@ -29,7 +29,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 ##TODOS
 
 - Error handle
-- Auth failure error handle
+- Auth failure error handle, `middleware can't handle jwt exception`
 - repository pattern
 - sendPasswordResetLink
 - reset Password
