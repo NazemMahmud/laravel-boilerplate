@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Redis;
+use App\Http\Resources\UserResource;
+use App\Enums\RedisKeyEnum as RedisKey;
 
 class UserController extends Controller
 {
@@ -16,15 +17,13 @@ class UserController extends Controller
      */
     public function profile(): UserResource
     {
-        $cachedUser = Redis::get('user_profile');
-//        dump($cachedUser);
+        $cachedUser = Redis::get(RedisKey::USER_PROFILE);
         if (isset($cachedUser)) {
             return new UserResource(json_decode($cachedUser, FALSE));
         }
+
         $user = auth()->user();
-//        dump($user);
-//        return $user;
-        Redis::set('user_profile', json_encode(
+        Redis::set(RedisKey::USER_PROFILE, json_encode(
             [
                 'id' => $user->id,
                 'name' => $user->name,
@@ -33,6 +32,5 @@ class UserController extends Controller
             ]));
 
         return new UserResource($user);
-//        return new UserResource(auth()->user());
     }
 }
