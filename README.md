@@ -26,6 +26,11 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
+## Database seed
+- To drop all table with seed: ` php artisan db:seed --class=UserSeeder`
+- Only seed: `php artisan migrate:fresh --seed`
+
+
 ##TODOS
 
 - Error handle

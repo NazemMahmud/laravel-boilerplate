@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Traits\DateTimer;
+use App\Enums\UserStatusEnum as Status;
 
 class UserSeeder extends Seeder
 {
@@ -27,7 +28,9 @@ class UserSeeder extends Seeder
                     'email' => 'superadmin@gmail.com',
                     'password' => bcrypt('qwerty123456'),
                     'created_at' => $this::dateTimeNow(),
-                    'updated_at' => $this::dateTimeNow()
+                    'updated_at' => $this::dateTimeNow(),
+                    'status' => Status::ACTIVE,
+                    'created_by' => 1,
                 ],
                 [
                     'id' => 2,
@@ -35,7 +38,9 @@ class UserSeeder extends Seeder
                     'email' => 'zahid@gmail.com',
                     'password' => bcrypt('qwerty123456'),
                     'created_at' => $this::dateTimeNow(),
-                    'updated_at' => $this::dateTimeNow()
+                    'updated_at' => $this::dateTimeNow(),
+                    'status' => Status::ACTIVE,
+                    'created_by' => 1,
                 ],
                 [
                     'id' => 3,
@@ -44,6 +49,8 @@ class UserSeeder extends Seeder
                     'password' => bcrypt('123456'),
                     'created_at' => $this::dateTimeNow(),
                     'updated_at' => $this::dateTimeNow(),
+                    'status' => Status::ACTIVE,
+                    'created_by' => 1,
                 ],
                 [
                     'id' => 4,
@@ -51,7 +58,9 @@ class UserSeeder extends Seeder
                     'email' => 'des@gmail.com',
                     'password' => bcrypt('123456'),
                     'created_at' => $this::dateTimeNow(),
-                    'updated_at' => $this::dateTimeNow()
+                    'updated_at' => $this::dateTimeNow(),
+                    'status' => Status::ACTIVE,
+                    'created_by' => 1,
                 ],
             ]);
     }
