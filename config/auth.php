@@ -113,4 +113,16 @@ return [
 
     'password_timeout' => 10800,
 
+    /*
+     |--------------------------------------------------------------------------
+     | Registration Email verification Expire Time
+     |--------------------------------------------------------------------------
+     | The expire time is the number of minutes
+     | config customized
+     *
+     */
+    'verification' => [
+        'expire' => 60
+    ]
+
 ];

@@ -24,4 +24,15 @@ class UserRepositoryEloquent implements UserRepositoryInterface
             'password' => Hash::make($request['password'])
         ]);
     }
+
+    /**
+     * Search user by any single column value
+     *
+     * @param $column
+     * @param $value
+     * @return mixed
+     */
+    public function getByColumn($column, $value) {
+        return $this->model::where($column, $value)->first();
+    }
 }
