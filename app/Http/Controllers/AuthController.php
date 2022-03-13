@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegistrationRequest;
-use App\Models\User;
 use App\Repositories\UserRepositoryInterface;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
@@ -28,11 +27,16 @@ class AuthController extends Controller
     public function registration(RegistrationRequest $request): JsonResponse
     {
         $requestData = $request->validated();
-
         $user = $this->repository->createResource($requestData);
 
+        event(new Registered($user)); // event call to send verify link to email
+
         return response()->json([
-            'message' => 'User successfully registered',
+            'data' => [
+                "name" => $user->name,
+                "email" => $user->email,
+            ],
+            'message' => 'Registration request done. Please check your email',
         ], 201);
     }
 
