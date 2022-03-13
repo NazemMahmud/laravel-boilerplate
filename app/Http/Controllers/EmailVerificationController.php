@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EmailVerificationRequest;
+use App\Models\User;
+use App\Repositories\UserRepositoryInterface;
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
+// use Illuminate\Foundation\Auth\EmailVerificationRequest; not using default
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Http\JsonResponse;
 
 class EmailVerificationController extends Controller
 {
+    public function __construct(private UserRepositoryInterface $repository)
+    {
+    }
 
     /**
      * @param EmailVerificationRequest $request
@@ -16,14 +22,16 @@ class EmailVerificationController extends Controller
      */
     public function verify(EmailVerificationRequest $request): JsonResponse
     {
-        if ($request->user()->hasVerifiedEmail()) {
+        $user = $request->validated();
+
+        if ($user->hasVerifiedEmail()) {
             return response()->json([
                 'message'=>'Email already verified'
             ], 200);
         }
 
-        if ($request->user()->markEmailAsVerified()) {
-            event(new Verified($request->user()));
+        if ($user->markEmailAsVerified()) {
+            event(new Verified($user));
         }
 
         return response()->json([
@@ -37,16 +45,18 @@ class EmailVerificationController extends Controller
      */
     public function sendVerificationEmail(Request $request): JsonResponse
     {
-        if ($request->user()->hasVerifiedEmail()) {
+        $user = User::where('email', $request->email)->first();
+
+        if ($user->hasVerifiedEmail()) {
             return response()->json([
-                'message' => 'Already Verified'
+                'message' => 'Email already Verified'
             ], 200);
         }
 
-        $request->user()->sendEmailVerificationNotification();
+        $user->sendEmailVerificationNotification();
 
         return response()->json([
-            'status' => 'verification-link-sent'
+            'message' => 'Verification link sent'
         ], 200);
     }
 }
