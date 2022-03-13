@@ -32,7 +32,7 @@ class AuthController extends Controller
         event(new Registered($user)); // event call to send verify link to email
 
         return response()->json([
-            'message' => 'User successfully registered',
+            'message' => 'Registration request done. Please check your email',
         ], 201);
     }
 
