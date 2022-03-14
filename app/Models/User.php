@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use App\Service\ResetPasswordNotificationService as ResetPasswordNotification;
 
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail, CanResetPassword
 {
@@ -62,6 +63,12 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail, CanRe
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function sendPasswordResetNotification($token) {
+        $url = 'http://localhost:3000/reset-password?token='. $token;
+
+        $this->notify(new ResetPasswordNotification($url));
     }
 
 }
