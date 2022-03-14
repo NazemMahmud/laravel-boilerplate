@@ -1,12 +1,16 @@
 <?php
 
-use App\Http\Controllers\EmailVerificationController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\ForgetPasswordController;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UserController;
-
-
+/** ************************ Auth
+ * Registration with Email validation,
+ * login,
+ * Forgot password with Email link
+****************************************/
 Route::prefix('v1')->group( function () {
     Route::post('login', [AuthController::class, 'login'])->name('login');
     Route::post('registration', [AuthController::class, 'registration']);
@@ -20,6 +24,10 @@ Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'ver
 Route::post('email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail'])
     ->middleware(['throttle:6,1'])->name('verification.send');
 
+
+Route::post('/forgot-password', [ForgetPasswordController::class, 'forgotPassword'] )
+    ->middleware('guest')->name('password.email');
+
 Route::middleware(['auth:api'])->prefix('v1')->group( function () {
     /**
      * Authentication related
@@ -27,7 +35,6 @@ Route::middleware(['auth:api'])->prefix('v1')->group( function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::get('refresh-check', [AuthController::class, 'check']);
-    Route::get('profile', [UserController::class, 'profile']);
 });
 
 Route::middleware([ 'verified', 'auth:api'])->prefix('v1')->group( function () {
