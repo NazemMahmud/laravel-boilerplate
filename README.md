@@ -5,15 +5,16 @@ Used Laravel version 8 for this.
 ## Implemented
 
 - JWT Authentication ( for registration, login, refresh token)
-- Email verification while registration. Email verification is customized [See Pull #7](https://github.com/NazemMahmud/laravel-boilerplate/pull/7) to get idea about cusomized information
+- Email verification while registration. Email verification is customized [See Pull #7](https://github.com/NazemMahmud/laravel-boilerplate/pull/7) to get idea about customized information
+- Forget password: with email reset link, customized [See Pull #9](https://github.com/NazemMahmud/laravel-boilerplate/pull/9) to get idea about customized information
 - Used Redis (phpredis). For this redis extension need to be installed in your PHP environment
 
 ## Upcoming TODOS
 
 - Error handle
-- sendPasswordResetLink
-- reset Password
+- Log Report
 - ************* **ACL** ********************
+- Social Login system
 
 ## Database seed
 - To drop all table with seed: ` php artisan db:seed --class=UserSeeder`
