@@ -24,9 +24,9 @@ Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'ver
 Route::post('email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail'])
     ->middleware(['throttle:6,1'])->name('verification.send');
 
-
-Route::post('/forgot-password', [ForgetPasswordController::class, 'forgotPassword'] )
-    ->middleware('guest')->name('password.email');
+// mail with token for forget password
+Route::post('forgot-password', [ForgetPasswordController::class, 'forgotPassword'] )->middleware('guest');
+Route::post('reset-password', [ForgetPasswordController::class, 'resetPassword'])->middleware('guest');
 
 Route::middleware(['auth:api'])->prefix('v1')->group( function () {
     /**
@@ -39,8 +39,6 @@ Route::middleware(['auth:api'])->prefix('v1')->group( function () {
 
 Route::middleware([ 'verified', 'auth:api'])->prefix('v1')->group( function () {
     Route::get('profile', [UserController::class, 'profile']);
-//    Route::post('sendPasswordResetLink', 'ResetPasswordController@sendEmail');
-//    Route::post('resetPassword', 'ChangePasswordController@process');
 });
 
 
