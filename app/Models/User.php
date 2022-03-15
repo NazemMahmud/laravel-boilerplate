@@ -65,8 +65,14 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail, CanRe
         return [];
     }
 
+    /**
+     * Override default reset password link form API for front
+     *
+     * @param $token
+     * @return void
+     */
     public function sendPasswordResetNotification($token) {
-        $url = 'http://localhost:3000/reset-password?token='. $token;
+        $url = env('RESET_PASSWORD_URL'). "?token={$token}";
 
         $this->notify(new ResetPasswordNotification($url));
     }
