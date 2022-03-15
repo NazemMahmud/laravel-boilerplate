@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Validator;
 
 class RegistrationRequest extends FormRequest
 {

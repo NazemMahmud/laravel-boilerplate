@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
-use App\Http\Requests\EmailVerificationRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\EmailVerificationRequest;
 use App\Models\User;
-use App\Repositories\UserRepositoryInterface;
-use Illuminate\Http\Request;
-// use Illuminate\Foundation\Auth\EmailVerificationRequest; not using default
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+
+// use Illuminate\Foundation\Auth\EmailVerificationRequest; not using default
 
 class EmailVerificationController extends Controller
 {
-    public function __construct(private UserRepositoryInterface $repository)
+    public function __construct()
     {
     }
 
