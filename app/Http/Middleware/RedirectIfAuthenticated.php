@@ -23,6 +23,7 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
+                // TODO: need to update for API based app
                 return redirect(RouteServiceProvider::HOME);
             }
         }

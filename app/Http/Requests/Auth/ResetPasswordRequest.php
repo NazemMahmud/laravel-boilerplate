@@ -1,20 +1,13 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Validator;
 
-class LoginRequest extends FormRequest
+class ResetPasswordRequest extends FormRequest
 {
-    /**
-     * Indicates if the validator should stop on the first rule failure.
-     *
-     * @var bool
-     */
-    protected $stopOnFirstFailure = true;
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -33,8 +26,9 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email',
-            'password' => 'required|string|min:6',
+            'token' => 'required',
+            'email' => 'required|string|email|max:100',
+            'password' => 'required|string|confirmed|min:6',
         ];
     }
 

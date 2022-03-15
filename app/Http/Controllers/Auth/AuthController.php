@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
-use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegistrationRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegistrationRequest;
 use App\Repositories\UserRepositoryInterface;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;

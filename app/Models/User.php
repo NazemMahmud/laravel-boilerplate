@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use App\Service\ResetPasswordNotificationService as ResetPasswordNotification;
 
-class User extends Authenticatable implements JWTSubject, MustVerifyEmail
+class User extends Authenticatable implements JWTSubject, MustVerifyEmail, CanResetPassword
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -61,6 +63,18 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    /**
+     * Override default reset password link form API for front
+     *
+     * @param $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token) {
+        $url = env('RESET_PASSWORD_URL'). "?token={$token}";
+
+        $this->notify(new ResetPasswordNotification($url));
     }
 
 }
