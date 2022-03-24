@@ -14,6 +14,7 @@ class Kernel extends HttpKernel
      * @var array<int, class-string|string>
      */
     protected $middleware = [
+        \Fruitcake\Cors\HandleCors::class,
          \App\Http\Middleware\TrustHosts::class, // uncomment it for: forgot password, NOT NECESSARY
         \App\Http\Middleware\TrustProxies::class,
         \App\Http\Middleware\EnforceJson::class,
