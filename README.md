@@ -30,3 +30,7 @@ to config redis, check `config/database.php` file `redis` array
 
 ### Note:
 Auth failure error handle, `middleware can't handle JWT exception`
+
+### Docker
+- copy and replace `docker-conf/local.example` as `docker-conf/Dockerfile`
+- copy and replace `docker-compose.yml.example` as `docker-compose.yml`
