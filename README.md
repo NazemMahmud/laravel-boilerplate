@@ -32,5 +32,6 @@ to config redis, check `config/database.php` file `redis` array
 Auth failure error handle, `middleware can't handle JWT exception`
 
 ### Docker
-- copy and replace `docker-conf/local.example` as `docker-conf/Dockerfile`
+- copy and replace `docker-conf/php/local.example` as `docker-conf/php/Dockerfile`
 - copy and replace `docker-compose.yml.example` as `docker-compose.yml`
+- for docker mysql, need to create user with password, and need to give full privilege to that user for all type of hosts

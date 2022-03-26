@@ -15,5 +15,5 @@ yarn-error.log
 /.vscode
 
 # docker file
-docker-conf/Dockerfile
+docker-conf/php/Dockerfile
 docker-compose.yml
