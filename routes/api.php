@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group( function () {
     Route::post('login', [AuthController::class, 'login'])->name('login');
     Route::post('registration', [AuthController::class, 'registration']);
+    // mail with token for forget password
     Route::post('forgot-password', [ForgetPasswordController::class, 'forgotPassword'] )->middleware('guest');
+    Route::post('reset-password', [ForgetPasswordController::class, 'resetPassword'])->middleware('guest');
 });
 
 // to get registration email
@@ -25,9 +27,6 @@ Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'ver
 Route::post('email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail'])
     ->middleware(['throttle:6,1'])->name('verification.send');
 
-// mail with token for forget password
-
-Route::post('reset-password', [ForgetPasswordController::class, 'resetPassword'])->middleware('guest');
 
 Route::middleware(['auth:api'])->prefix('v1')->group( function () {
     /**

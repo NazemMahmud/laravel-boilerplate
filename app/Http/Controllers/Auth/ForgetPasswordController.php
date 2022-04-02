@@ -34,10 +34,10 @@ class ForgetPasswordController extends Controller
         $requestData = $request->validated();
         try {
             if ($checkUser = $this->repository->getByColumn('email', $requestData['email'])) {
-                $status = Password::sendResetLink($requestData['email']); // vendor\laravel\framework\src\Illuminate\Auth\Passwords\PasswordBroker.php
+                $status = Password::sendResetLink($requestData); // vendor\laravel\framework\src\Illuminate\Auth\Passwords\PasswordBroker.php
                 return $status === Password::RESET_LINK_SENT
-                    ? response()->json(['status' => __($status)])
-                    : response()->json(['email' => __($status)]);
+                    ? HttpHandler::successMessage(__($status))
+                    : HttpHandler::errorMessage( __($status));
             }
             return HttpHandler::errorMessage("Email doesn't exist");
         } catch (\Exception $ex) {
@@ -67,13 +67,9 @@ class ForgetPasswordController extends Controller
         );
 
         if ($status == Password::PASSWORD_RESET) {
-            response()->json([
-                'message'=> 'Password reset successfully'
-            ]);
+            return HttpHandler::successMessage('Password reset successfully');
         }
 
-        return response()->json([
-            'message'=> __($status)
-        ], 500);
+        return HttpHandler::errorMessage(__($status), 500);
     }
 }
